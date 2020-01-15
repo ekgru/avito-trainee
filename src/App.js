@@ -16,17 +16,17 @@ class App extends React.Component {
   }
 
   render() {
-    let pictures = [];
-    this.state.images.forEach(function(item, i) {
-      pictures.push(<Pic url={item.url} key={i} id={item.id} />);
-    });
+    const pictures = this.state.images.map((item, i) => (
+      <Pic url={item.url} key={i} id={item.id} />
+    ));
     return (
-     <div className='page'><div className="main-content">
-        <header>HELLO WORLD!</header>
-        <div id="img-container">{pictures}</div>
-        
-      </div><div className='footer'>© 2018-2020</div></div>
-      
+      <div className="page">
+        <div className="main-content">
+          <header>HELLO WORLD!</header>
+          <div id="img-container">{pictures}</div>
+        </div>
+        <div className="footer">© 2018-2020</div>
+      </div>
     );
   }
 }

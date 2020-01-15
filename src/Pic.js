@@ -5,13 +5,13 @@ class Pic extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalOn: false,
+      modalOn: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
-//
-//обработчик отвечает за открытие и закрытие модалки
-//
+  //
+  //обработчик отвечает за открытие и закрытие модалки
+  //
   handleClick() {
     this.setState(prevState => {
       return {
@@ -21,10 +21,17 @@ class Pic extends React.Component {
   }
 
   render() {
-  
     return (
       <div>
-        {this.state.modalOn&&<Modal closeClick={this.handleClick} altPic={this.props.url} picID={this.props.id}/>}
+        {this.state.modalOn ? (
+          <Modal
+            closeClick={this.handleClick}
+            altPic={this.props.url}
+            picID={this.props.id}
+          />
+        ) : (
+          ""
+        )}
         <img
           src={this.props.url}
           id={this.props.id}

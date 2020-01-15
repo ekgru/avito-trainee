@@ -30,6 +30,7 @@ class Modal extends React.Component {
   // создаем комментарии
   //
   doComments() {
+    
     let commentsArr = this.state.comments;
     let options = {
       day: "numeric",
@@ -39,7 +40,7 @@ class Modal extends React.Component {
     let comments;
     if (Array.isArray(commentsArr) && commentsArr.length) {
       comments = commentsArr.map((item, i, arr) => (
-        <div className='comment' key={i}>
+        <div className="comment" key={i}>
           <div className="comment-date">
             {new Date(item.date).toLocaleString("ru", options)}
           </div>
@@ -47,15 +48,14 @@ class Modal extends React.Component {
         </div>
       ));
     }
+    console.log('comm', comments);
     return comments;
   }
   //
   //метод для отправки комментария
   //
   postComment() {
-    let message = { name: "", comment: "" };
-    message.name = this.state.name;
-    message.comment = this.state.comment;
+    let message = { name: this.state.name, comment: this.state.comment };
     fetch(
       `https://boiling-refuge-66454.herokuapp.com/images/${this.state.id}/comments`,
       {
@@ -66,9 +66,13 @@ class Modal extends React.Component {
         body: JSON.stringify(message)
       }
     );
-    this.state.comments.push({ text: this.state.comment, date: new Date() });
+    const newComment = { text: this.state.comment, date: new Date() };
     this.setState(prevState => {
-      return { name: "", comment: "" };
+      return {
+        name: "",
+        comment: "",
+        comments: [...prevState.comments, newComment]
+      };
     });
   }
   //
@@ -115,8 +119,11 @@ class Modal extends React.Component {
             </form>
           </div>
           <div className="modal-col">
-            <div className="modal-comment-area">{this.doComments()}</div>{" "}
-            <span onClick={this.props.closeClick} className="modal-close"></span>
+            <div className="modal-comment-area">{this.doComments()}</div>
+            <span
+              onClick={this.props.closeClick}
+              className="modal-close"
+            ></span>
           </div>
         </div>
       </div>
